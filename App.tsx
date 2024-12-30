@@ -5,7 +5,7 @@
  * @format
  */
 
-import React, {useEffect, useState} from 'react';
+import React, {useEffect} from 'react';
 import {
   configureReanimatedLogger,
   ReanimatedLogLevel,
@@ -69,7 +69,6 @@ function Section({children, title}: SectionProps): React.JSX.Element {
 
 function App(): React.JSX.Element {
   const isDarkMode = useColorScheme() === 'dark';
-  const [isUpdating, setIsUpdating] = useState<boolean>(false);
 
   const backgroundStyle = {
     backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
@@ -81,20 +80,16 @@ function App(): React.JSX.Element {
       const update = await Updates.checkForUpdateAsync();
 
       if (update.isAvailable) {
-        setIsUpdating(true);
         RNBootSplash.hide({fade: true});
 
-        // 업데이트 다운로드
         await Updates.fetchUpdateAsync();
 
         setTimeout(async () => {
-          // 업데이트 후 앱 재로드
           await Updates.reloadAsync();
         }, 5000);
       } else {
         setTimeout(() => {
           RNBootSplash.hide({fade: true});
-          setIsUpdating(false);
         }, 3000);
       }
     } catch (error) {

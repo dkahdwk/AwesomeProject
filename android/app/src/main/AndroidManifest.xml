@@ -1,4 +1,7 @@
-<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+<manifest
+  xmlns:tools = "http://schemas.android.com/tools"
+  xmlns:android="http://schemas.android.com/apk/res/android"
+>
   <uses-permission android:name="android.permission.INTERNET" />
   <application
     android:name=".MainApplication"
@@ -29,20 +32,24 @@
       android:value="true"
     />
     <meta-data
+      tools:replace="android:value"
       android:name="expo.modules.updates.EXPO_UPDATES_CHECK_ON_LAUNCH"
       android:value="ALWAYS" />
     <meta-data
+      tools:replace="android:value"
       android:name="expo.modules.updates.EXPO_UPDATES_LAUNCH_WAIT_MS"
-      android:value="0" />
+      android:value="10000" />
     <meta-data
+      tools:replace="android:value"
       android:name="expo.modules.updates.EXPO_UPDATE_URL"
       android:value="https://u.expo.dev/146c34c8-81a1-403e-ae3e-8a6d1cfa71f7" />
-    <meta-data 
+    <meta-data
       android:value="{&quot;expo-channel-name&quot;:&quot;Development&quot;}"
       tools:replace="android:value"
       android:name="expo.modules.updates.UPDATES_CONFIGURATION_REQUEST_HEADERS_KEY"
     />
     <meta-data
+      tools:replace="android:value"
       android:name="expo.modules.updates.EXPO_RUNTIME_VERSION"
       android:value="0.0.1" />
   </application>
