@@ -5,9 +5,14 @@
  * @format
  */
 
-import React from 'react';
+import React, {useEffect, useState} from 'react';
+import {
+  configureReanimatedLogger,
+  ReanimatedLogLevel,
+} from 'react-native-reanimated';
 import type {PropsWithChildren} from 'react';
 import {
+  Alert,
   SafeAreaView,
   ScrollView,
   StatusBar,
@@ -24,6 +29,13 @@ import {
   LearnMoreLinks,
   ReloadInstructions,
 } from 'react-native/Libraries/NewAppScreen';
+import RNBootSplash from 'react-native-bootsplash';
+import * as Updates from 'expo-updates';
+
+configureReanimatedLogger({
+  level: ReanimatedLogLevel.warn,
+  strict: false, // Disable strict mode
+});
 
 type SectionProps = PropsWithChildren<{
   title: string;
@@ -57,10 +69,43 @@ function Section({children, title}: SectionProps): React.JSX.Element {
 
 function App(): React.JSX.Element {
   const isDarkMode = useColorScheme() === 'dark';
+  const [isUpdating, setIsUpdating] = useState<boolean>(false);
 
   const backgroundStyle = {
     backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
   };
+
+  const applyUpdate = async () => {
+    try {
+      // 업데이트 체크
+      const update = await Updates.checkForUpdateAsync();
+
+      if (update.isAvailable) {
+        setIsUpdating(true);
+        RNBootSplash.hide({fade: true});
+
+        // 업데이트 다운로드
+        await Updates.fetchUpdateAsync();
+
+        setTimeout(async () => {
+          // 업데이트 후 앱 재로드
+          await Updates.reloadAsync();
+        }, 5000);
+      } else {
+        setTimeout(() => {
+          RNBootSplash.hide({fade: true});
+          setIsUpdating(false);
+        }, 3000);
+      }
+    } catch (error) {
+      console.log('error: ', error);
+      Alert.alert(JSON.stringify(error));
+    }
+  };
+
+  useEffect(() => {
+    applyUpdate();
+  }, []);
 
   return (
     <SafeAreaView style={backgroundStyle}>

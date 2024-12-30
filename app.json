@@ -1,4 +1,25 @@
 {
   "name": "AwesomeProject",
-  "displayName": "AwesomeProject"
+  "displayName": "AwesomeProject",
+  "expo": {
+    "slug": "AwesomeProject",
+    "extra": {
+      "eas": {
+        "projectId": "146c34c8-81a1-403e-ae3e-8a6d1cfa71f7"
+      }
+    },
+    "patchVersions": {
+      "development": "1",
+      "staging": "1",
+      "production": "1"
+    },
+    "updates": {
+      "url": "https://u.expo.dev/146c34c8-81a1-403e-ae3e-8a6d1cfa71f7",
+      "checkAutomatically": "ON_LOAD",
+      "enabled": true
+    },
+    "runtimeVersion": "0.0.1",
+    "android": {},
+    "ios": {}
+  }
 }
